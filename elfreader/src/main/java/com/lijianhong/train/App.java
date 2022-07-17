@@ -38,10 +38,12 @@ public class App {
             fileName = args[0];
             elfBytes = FileUtils.readFileToByteArray(new File(fileName));
         }else {
-            fileName = "";
+            elfBytes = ReadUtils.loadDefaultELF("SimpleSection.o");
         }
 
-        Elf64Parser.parse(ReadUtils.loadDefaultELF("SimpleSection.o"));
+        Elf64Parser parser = new Elf64Parser(elfBytes);
+
+
 
         System.out.println("Hello World!");
     }

@@ -41,4 +41,7 @@ public class ReadUtils {
         return new byte[0];
     }
 
+    public static short readShort(byte[] fileBytes, int offset) {
+        return (short) (fileBytes[offset] + (fileBytes[offset + 1] << 8));
+    }
 }

@@ -1,10 +1,15 @@
 package com.lijianhong.train.def;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author lijianhong Date: 2022/7/17 Time: 4:13 PM
  * @version $Id$
  */
 public class ElfHeader {
+
+    private static Logger logger = LoggerFactory.getLogger(ElfHeader.class);
 
     // typedef struct elf64_hdr {
     //     unsigned char	e_ident[EI_NIDENT];	/* ELF "magic number" */
@@ -25,8 +30,25 @@ public class ElfHeader {
 
 
     /** magic number */
-    public final byte[] e_ident = new byte[Const.EI_NIDENT];
+    public byte[] e_ident = new byte[Const.EI_NIDENT];
+
+    public short e_type;
+    public short e_machine;
+    public int e_version;
+    public long e_entry;
+    public long e_phoff;
+    public long e_shoff;
+    public int e_flags;
+    public short e_ehsize;
+    public short e_phentsize;
+    public short e_phnum;
+    public short e_shentsize;
+    public short e_shnum;
+    public short e_shstrndx;
 
 
+    public void printEtype() {
 
+        logger.info("e_type:{} - {}", e_type, Const.ETYPE_MAP.get((int) e_type));
+    }
 }
