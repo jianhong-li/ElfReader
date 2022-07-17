@@ -1,7 +1,8 @@
 package com.lijianhong.train.parser;
 
 import com.google.common.base.Preconditions;
-import com.lijianhong.train.def.ElfEntity;
+import com.lijianhong.train.def.ElfEntity64;
+import com.lijianhong.train.def.ElfHeader64;
 import com.lijianhong.train.reader.ReadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,27 +17,21 @@ public class Elf64Parser {
 
     private boolean is64BitPlatform;
 
-    private ElfEntity elfEntity = new ElfEntity();
+    private ElfEntity64 elfEntity = new ElfEntity64();
 
     public Elf64Parser(byte[] fileBytes) {
 
-        ReadUtils.readBytes(fileBytes, 0, 16, elfEntity.elfHeader.e_ident);
+        byte elfType = fileBytes[4];
+        if (elfType == 1) {
+            logger.info("ELF平台: 32位");
+        } else if (elfType == 2) {
+            logger.info("ELF平台: 64位");
+            elfEntity.elfHeader.init(fileBytes);
+        } else {
+            throw new UnsupportedOperationException("不支持的平台类型:" + elfType);
+        }
 
-        logger.info(
-            "magicNumber:{}",
-            String.format(
-                "0x%x,0x%x,0x%x,0x%x",
-                elfEntity.elfHeader.e_ident[0],
-                elfEntity.elfHeader.e_ident[1],
-                elfEntity.elfHeader.e_ident[2],
-                elfEntity.elfHeader.e_ident[3]
-                )
-        );
-
-        elfEntity.elfHeader.e_type = ReadUtils.readShort(fileBytes, 16);
-        elfEntity.elfHeader.printEtype();
-
-        elfEntity.elfHeader.e_machine = ReadUtils.readShort(fileBytes, 18);
+        logger.info("elfHeader:\n{}", elfEntity.elfHeader);
 
         Preconditions.checkState(elfEntity.elfHeader.e_ident[1] == 'E');
         Preconditions.checkState(elfEntity.elfHeader.e_ident[2] == 'L');
@@ -48,7 +43,7 @@ public class Elf64Parser {
 
     }
 
-    public ElfEntity parse() {
+    public ElfEntity64 parse() {
 
 
 

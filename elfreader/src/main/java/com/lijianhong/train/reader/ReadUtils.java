@@ -1,6 +1,7 @@
 package com.lijianhong.train.reader;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,7 +24,6 @@ public class ReadUtils {
         }
     }
 
-
     public static byte[] loadDefaultELF(String sourcePath) {
 
         if (StringUtils.isEmpty(sourcePath)) {
@@ -33,7 +33,9 @@ public class ReadUtils {
         StringBuilder tplBuffer = new StringBuilder();
         try (InputStream resourceAsStream =
             ReadUtils.class.getClassLoader().getResourceAsStream(sourcePath)) {
-            return IOUtils.toByteArray(new InputStreamReader(resourceAsStream));
+
+            /* return ByteStreams.toByteArray(resourceAsStream);*/
+            return IOUtils.toByteArray(resourceAsStream);
 
         } catch (IOException e) {
             logger.error("load error", e);
@@ -43,5 +45,32 @@ public class ReadUtils {
 
     public static short readShort(byte[] fileBytes, int offset) {
         return (short) (fileBytes[offset] + (fileBytes[offset + 1] << 8));
+    }
+
+    public static int readWord(byte[] fileBytes, int offset) {
+        long ret = 0;
+        ret += fileBytes[offset];
+        ret += fileBytes[offset + 1] << 8;
+        ret += fileBytes[offset + 2] << 16;
+        ret += fileBytes[offset + 3] << 24;
+        return (int)ret;
+    }
+
+    public static long readLong(byte[] fileBytes, int offset) {
+        long ret = 0;
+        ret += (0xff & fileBytes[offset]);
+        ret += (0xff & fileBytes[offset + 1]) << 8;
+        ret += (0xff & fileBytes[offset + 2]) << 16;
+        ret += (0xff & fileBytes[offset + 3]) << 24;
+
+
+
+        long high = 0;
+
+        high +=(0xff &  fileBytes[offset + 4]);
+        high +=(0xff &  fileBytes[offset + 5]) << 8;
+        high +=(0xff &  fileBytes[offset + 6]) << 16;
+        high +=(0xff &  fileBytes[offset + 7]) << 24;
+        return (high << 32) + ret;
     }
 }

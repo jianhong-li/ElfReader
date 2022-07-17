@@ -46,5 +46,6 @@ public class App {
 
 
         System.out.println("Hello World!");
+        System.out.println((byte)0x90);
     }
 }

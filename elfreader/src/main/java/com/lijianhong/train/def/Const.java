@@ -22,6 +22,7 @@ public class Const {
     public static final int EM_68K = 4;
     public static final int EM_88K = 5;
     public static final int EM_860 = 6;
+    public static final int EM_X86_64 = 62;
 
     public static Map<Integer, String> ETYPE_MAP = new HashMap<>();
     public static Map<Integer, String> EM_MAP = new HashMap<>();
@@ -31,12 +32,15 @@ public class Const {
         ETYPE_MAP.put(2, "ETYPE_EXEC");
         ETYPE_MAP.put(3, "ET_DYN");
 
+
+        // https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html
         EM_MAP.put(1, "AT&T WE 32100");
         EM_MAP.put(2, "SPARC");
         EM_MAP.put(3, "Intel X86");
         EM_MAP.put(4, "Motorola 68000");
         EM_MAP.put(5, "Motorola 88000");
         EM_MAP.put(6, "Motorola 80860");
+        EM_MAP.put(62, "EM_X86_64");
     }
 
 }
