@@ -5,7 +5,10 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 
 /**
- * ELF文件读取入口
+ * ELF文件读取入口:
+ * <pre>
+ *     ELF 文件定义: https://github.com/torvalds/linux/blob/master/include/uapi/linux/elf.h
+ * </pre>
  */
 public class App {
 
