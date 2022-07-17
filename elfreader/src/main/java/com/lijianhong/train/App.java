@@ -43,9 +43,5 @@ public class App {
 
         Elf64Parser parser = new Elf64Parser(elfBytes);
 
-
-
-        System.out.println("Hello World!");
-        System.out.println((byte)0x90);
     }
 }

@@ -1,6 +1,7 @@
 package com.lijianhong.train.def;
 
 import com.lijianhong.train.reader.ReadUtils;
+import com.lijianhong.train.util.Hex;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,11 +119,11 @@ public class ElfHeader64 {
     }
 
     private void printShoff() {
-        logger.info("e_shoff:\t{}",String.format("0x%x",e_shoff));
+        logger.info("e_shoff:\t{}", String.format("0x%x", e_shoff));
     }
 
     private void printPhoff() {
-        logger.info("e_phoff:\t{}",String.format("0x%x",e_phoff));
+        logger.info("e_phoff:\t{}", String.format("0x%x", e_phoff));
     }
 
     public void printEtype() {
@@ -142,23 +143,62 @@ public class ElfHeader64 {
         logger.info("e_entry:\t{} , \t 备注: 当没有入口,或者是目标文件时,为0值.即无效", e_entry);
     }
 
+    public void printPhOff() {
+        logger.info("e_phoff:\t{} , \t 备注: 当没有入口,或者是目标文件时,为0值.即无效", e_phoff);
+    }
+
+    public void printHeader() {
+
+        logger.info("======================================");
+
+        // 打印: e_ident
+        logger.info("MAGIC NUMBER:{},{},{},{}",
+                    Hex.toHex(e_ident[0]),
+                    Hex.toHex(e_ident[1]),
+                    Hex.toHex(e_ident[2]),
+                    Hex.toHex(e_ident[3])
+        );
+
+        // https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html#elfid
+        logger.info("platform:\t{}  - 1:32位对象,2:64位对象", e_ident[4]);
+        logger.info("  endian:\t{}  - 1:ELFDATA2LSB,2:ELFDATA2MSB", e_ident[5]);
+        logger.info("main ver:\t{}  ", e_ident[6]);
+        logger.info("EI_OSABI:\t{}  ", e_ident[7]);
+        logger.info("EI_ABIVERSION:\t{}  ", e_ident[8]);
+
+        logger.info("------------------------------------");
+        // 文件类型
+        logger.info("   e_type:{}  - {}", e_type, Const.ETYPE_MAP.get((int) e_type));
+        // 机器类型. 指CPU
+        logger.info("e_machine:{} - {}", e_machine, Const.EM_MAP.get((int) e_machine));
+        // 版本
+        logger.info("e_version:{} ", e_version);
+
+        logger.info("  e_entry:{}  - 备注: 当没有入口,或者是目标文件时,为0值.即无效", e_entry);
+        logger.info("  e_phoff:{}  ", e_phoff);
+        logger.info("  e_shoff:{} , 代表段表的偏移", Hex.toHex(e_shoff));
+
+        logger.info("======================================");
+    }
+
     @Override
     public String toString() {
+
         return "ElfHeader{" +
             "e_ident=" + Arrays.toString(e_ident) +
             "\n, e_type=" + e_type +
             "\n, e_machine=" + e_machine +
             "\n, e_version=" + e_version +
             "\n, e_entry=" + e_entry +
-            "\n, e_phoff=" + String.format("0x%x", e_phoff)  +
+            "\n, e_phoff=" + String.format("0x%x", e_phoff) +
             "\n, e_shoff=" + String.format("0x%x", e_shoff) +
-            "\n, e_flags=" + e_flags +
-            "\n, e_ehsize=" + e_ehsize +
-            "\n, e_phentsize=" + e_phentsize +
-            "\n, e_phnum=" + e_phnum +
-            "\n, e_shentsize=" + e_shentsize +
-            "\n, e_shnum=" + e_shnum +
-            "\n, e_shstrndx=" + e_shstrndx +
+            "\n, e_flags=" + String.format("0x%x", e_flags) +
+            "\n, e_ehsize=" + String.format("0x%x", e_ehsize) +
+            "\n, e_phentsize=" + String.format("0x%x", e_phentsize) +
+            "\n, e_phnum=" + String.format("0x%x", e_phnum) +
+            "\n, e_shentsize=" + String.format("0x%x", e_shentsize) +
+            "\n, e_shnum=" + String.format("0x%x", e_shnum) +
+            "\n, e_shstrndx=" + String.format("0x%x", e_shstrndx) +
             '}';
     }
 }
