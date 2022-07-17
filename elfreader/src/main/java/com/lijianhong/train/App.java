@@ -1,5 +1,7 @@
 package com.lijianhong.train;
 
+import com.lijianhong.train.parser.Elf64Parser;
+import com.lijianhong.train.reader.ReadUtils;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -20,13 +22,26 @@ public class App {
      * @param args 参数列表
      */
     public static void main(String[] args) throws IOException {
-        if (args == null || args.length < 1) {
+       /* if (args == null || args.length < 1) {
             System.out.println("please input the file name of elf file");
             System.exit(1);
         }
-        logger.info("start to read file: {}....", args[0]);
-        String fileName = args[0];
-        byte[] elfBytes = FileUtils.readFileToByteArray(new File(fileName));
+        logger.info("start to read file: {}....", args[0]);*/
+
+
+
+
+        String fileName;
+        byte[] elfBytes;
+
+        if (args.length > 0) {
+            fileName = args[0];
+            elfBytes = FileUtils.readFileToByteArray(new File(fileName));
+        }else {
+            fileName = "";
+        }
+
+        Elf64Parser.parse(ReadUtils.loadDefaultELF("SimpleSection.o"));
 
         System.out.println("Hello World!");
     }
