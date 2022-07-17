@@ -56,7 +56,16 @@ public class Shdr64 {
 
     public void printInfo() {
 
-        logger.info("sh[{}]sh_name:{}", _index,Hex.toHex(sh_name));
+        logger.info("sh[{}]::sh_name:{}", _index,Hex.toHex(sh_name));
+        logger.info("sh[{}]::sh_type:{}", _index,Hex.toHex(sh_type));
+        logger.info("sh[{}]::sh_flags:{}", _index,Hex.toHex(sh_flags));
+        logger.info("sh[{}]::sh_addr:{}", _index,Hex.toHex(sh_addr));
+        logger.info("sh[{}]::sh_offset:{}", _index,Hex.toHex(sh_offset));
+        logger.info("sh[{}]::sh_size:{}", _index,Hex.toHex(sh_size));
+        logger.info("sh[{}]::sh_link:\t\t{}", _index,Hex.toHex(sh_link));
+        logger.info("sh[{}]::sh_info:\t\t{}", _index,Hex.toHex(sh_info));
+        logger.info("sh[{}]::sh_addralign:{}", _index,Hex.toHex(sh_addralign));
+        logger.info("sh[{}]::sh_entsize:\t{}", _index,Hex.toHex(sh_entsize));
     }
 
 }

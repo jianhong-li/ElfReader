@@ -27,7 +27,9 @@ public class ElfEntity64 {
         logger.info("段表基础偏移为:{} ,段个数为:{}", baseOffset, sectionTableNumber);
         for (int i = 0; i < sectionTableNumber; i++) {
 
-            baseOffset += i * Shdr64.size;
+            baseOffset += Shdr64.size;
+
+            //logger.info("start parse section table[{}], from baseoffset:{}",i,baseOffset);
 
             Shdr64 shdr64 = new Shdr64();
             shdr64.init(fileBytes, baseOffset);
