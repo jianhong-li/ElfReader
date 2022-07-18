@@ -34,14 +34,16 @@ public class Shdr64 {
 
     public int sh_name;        /* Section name, index in string tbl */
     public int sh_type;        /* Type of section */
-    public long sh_flags;        /* Miscellaneous section attributes */
-    public long sh_addr;        /* Section virtual addr at execution */
-    public long sh_offset;        /* Section file offset */
-    public long sh_size;        /* Size of section in bytes */
+    public long sh_flags;      /* Miscellaneous section attributes */
+    public long sh_addr;       /* Section virtual addr at execution */
+    public long sh_offset;     /* Section file offset */
+    public long sh_size;       /* Size of section in bytes */
     public int sh_link;        /* Index of another section */
     public int sh_info;        /* Additional section information */
-    public long sh_addralign;    /* Section alignment */
+    public long sh_addralign;  /* Section alignment */
     public long sh_entsize;    /* Entry size if section holds table */
+
+    public String _name;
 
     public void init(byte[] fileBytes, int baseOffset) {
             this.sh_name    = ReadUtils.readWord(fileBytes,        baseOffset);
@@ -66,7 +68,7 @@ public class Shdr64 {
             sb.append("Flag\t\t\t\t\t\t\t\t\t\t\t\t\t");
             sb.append("Addr").append(makeTab("Addr",12));
             sb.append("Offset").append(makeTab("Offset",12));
-            sb.append("size").append(makeTab("size",8));
+            sb.append("size").append(makeTab("size",4));
             sb.append("Lk").append(makeTab("lk",8));
             sb.append("Inf").append(makeTab("Inf",8));
             sb.append("Al").append(makeTab("Al",4));;
@@ -77,7 +79,8 @@ public class Shdr64 {
         sb.append(String.format("%2d", _index)).append("\t\t\t");
 
         // 名称
-        sb.append(Hex.toHex(sh_name)).append("\t\t\t");
+        String __name = _name.isEmpty() ? Hex.toHex(sh_name) : _name;
+        sb.append(__name).append(makeTab(String.valueOf(__name), 8));
 
         // 类型
         sb.append(SH_TYPE.codeOf(sh_type)).append(makeTab(String.valueOf(SH_TYPE.codeOf(sh_type)), 10));
@@ -93,7 +96,7 @@ public class Shdr64 {
         sb.append(Hex.toHex(sh_offset)).append("\t\t\t");
 
         // 段大小
-        sb.append(sh_size).append(makeTab(String.valueOf(sh_size),8));
+        sb.append(sh_size).append(makeTab(String.valueOf(sh_size),4));
 
         // sh_link
         sb.append(Hex.toHex(sh_link)).append("\t\t\t");
@@ -113,6 +116,7 @@ public class Shdr64 {
     }
 
     private String makeTab(String content,int contentTabs ) {
+
         int tabSize = 2;
         int length = content.length();
         int tabCnt = 0;
@@ -137,8 +141,6 @@ public class Shdr64 {
     }
 
     public void printInfo() {
-
-
 
         logger.info("{}", _index);
         logger.info("sh[{}]::sh_name:{}", _index,Hex.toHex(sh_name));

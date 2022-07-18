@@ -1,5 +1,6 @@
 package com.lijianhong.train.def;
 
+import com.lijianhong.train.def.enums.ENDIAN_TYPE;
 import com.lijianhong.train.reader.ReadUtils;
 import com.lijianhong.train.util.Hex;
 import java.util.Arrays;
@@ -149,56 +150,44 @@ public class ElfHeader64 {
 
     public void printHeader() {
 
-        logger.info("======================================");
+        System.out.println(this);
 
-        // 打印: e_ident
-        logger.info("MAGIC NUMBER:{},{},{},{}",
-                    Hex.toHex(e_ident[0]),
-                    Hex.toHex(e_ident[1]),
-                    Hex.toHex(e_ident[2]),
-                    Hex.toHex(e_ident[3])
-        );
-
-        // https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html#elfid
-        logger.info("platform:\t{}  - 1:32位对象,2:64位对象", e_ident[4]);
-        logger.info("  endian:\t{}  - 1:ELFDATA2LSB,2:ELFDATA2MSB", e_ident[5]);
-        logger.info("main ver:\t{}  ", e_ident[6]);
-        logger.info("EI_OSABI:\t{}  ", e_ident[7]);
-        logger.info("EI_ABIVERSION:\t{}  ", e_ident[8]);
-
-        logger.info("------------------------------------");
-        // 文件类型
-        logger.info("   e_type:{}  - {}", e_type, Const.ETYPE_MAP.get((int) e_type));
-        // 机器类型. 指CPU
-        logger.info("e_machine:{} - {}", e_machine, Const.EM_MAP.get((int) e_machine));
-        // 版本
-        logger.info("e_version:{} ", e_version);
-
-        logger.info("  e_entry:{}  - 备注: 当没有入口,或者是目标文件时,为0值.即无效", e_entry);
-        logger.info("  e_phoff:{}  ", e_phoff);
-        logger.info("  e_shoff:{} , 代表段表的偏移", Hex.toHex(e_shoff));
-
-        logger.info("======================================");
     }
 
     @Override
     public String toString() {
 
-        return "ElfHeader{" +
-            "e_ident=" + Arrays.toString(e_ident) +
-            "\n, e_type=" + e_type +
-            "\n, e_machine=" + e_machine +
-            "\n, e_version=" + e_version +
-            "\n, e_entry=" + e_entry +
-            "\n, e_phoff=" + String.format("0x%x", e_phoff) +
-            "\n, e_shoff=" + String.format("0x%x", e_shoff) +
-            "\n, e_flags=" + String.format("0x%x", e_flags) +
-            "\n, e_ehsize=" + String.format("0x%x", e_ehsize) +
-            "\n, e_phentsize=" + String.format("0x%x", e_phentsize) +
-            "\n, e_phnum=" + String.format("0x%x", e_phnum) +
-            "\n, e_shentsize=" + String.format("0x%x", e_shentsize) +
-            "\n, e_shnum=" + String.format("0x%x", e_shnum) +
-            "\n, e_shstrndx=" + String.format("0x%x", e_shstrndx) +
-            '}';
+        StringBuilder sb = new StringBuilder("======================================\n");
+
+        // 打印: e_ident
+        sb.append("\nMAGIC NUM: ")
+          .append(Hex.toHex(e_ident[0])).append(", ")
+          .append(Hex.toHex(e_ident[1])).append(", ")
+          .append(Hex.toHex(e_ident[2])).append(", ")
+          .append(Hex.toHex(e_ident[3])).append("  ")
+        ;
+
+        // https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html#elfid
+        sb.append("\n  platform: ").append(e_ident[4] == 1 ? "32位对象" : "64位对象");
+        sb.append("\n    endian: ").append(ENDIAN_TYPE.codeOf(e_ident[5]).getDesc());
+        sb.append("\n  main ver: ").append(e_ident[6]);
+        sb.append("\n  EI_OSABI: ").append(e_ident[7]);
+        sb.append("\nEI_ABIVERSION: ").append(e_ident[8]);
+
+        // 文件类型
+        sb.append("\n    e_type: ").append(e_type).append("  - ").append(Const.ETYPE_MAP.get((int) e_type));
+        // 机器类型. 指CPU
+        sb.append("\n e_machine: ").append(e_machine).append(" - ").append(Const.EM_MAP.get((int) e_machine));
+        // 版本
+        sb.append("\n e_version: ").append(e_version);
+
+        sb.append("\n   e_entry: ").append(e_entry).append("  - 备注: 当没有入口,或者是目标文件时,为0值.即无效");
+        sb.append("\n   e_phoff: ").append(e_phoff);
+        sb.append("\n   e_shoff: ").append(Hex.toHex(e_shoff)).append(" , 段表偏移");
+        sb.append("\n   e_shnum: ").append(e_shnum).append(" , 段表数量");
+        sb.append("\ne_shstrndx: ").append(e_shstrndx).append(" , 段表引用注常量表编号");
+
+        sb.append("\n======================================");
+        return sb.toString();
     }
 }

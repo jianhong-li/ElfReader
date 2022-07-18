@@ -17,9 +17,12 @@ public class Elf64Parser {
 
     private boolean is64BitPlatform;
 
-    private ElfEntity64 elfEntity = new ElfEntity64();
+    private ElfEntity64 elfEntity;
 
     public Elf64Parser(byte[] fileBytes) {
+
+        elfEntity = new ElfEntity64(fileBytes);
+
 
         byte elfType = fileBytes[4];
         if (elfType == 1) {
@@ -34,12 +37,13 @@ public class Elf64Parser {
 
             elfEntity.initStrTab(fileBytes);
 
-            logger.info("elfHeader:\n{}", elfEntity.elfHeader);
+            //logger.info("elfHeader:\n{}", elfEntity.elfHeader);
 
             Preconditions.checkState(elfEntity.elfHeader.e_ident[1] == 'E');
             Preconditions.checkState(elfEntity.elfHeader.e_ident[2] == 'L');
             Preconditions.checkState(elfEntity.elfHeader.e_ident[3] == 'F');
 
+            elfEntity.printSegTabInfo();
             // 打印段表偏移.
             logger.info("段表位置偏移:{}", elfEntity.elfHeader.e_shoff);
 
