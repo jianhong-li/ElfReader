@@ -46,8 +46,6 @@ public class ElfEntity64 {
             shdr64List.add(shdr64);
             baseOffset += Shdr64.size;
         }
-
-
     }
 
     public void printSegTabInfo() {
@@ -75,11 +73,7 @@ public class ElfEntity64 {
 
         }
 
-
         // 其它字符串表
-
-
-
     }
 
     private List<String> parseStrTab(Shdr64 secNameSegHdr) {

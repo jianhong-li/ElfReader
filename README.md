@@ -11,7 +11,9 @@ ELF 文件解析程序
 > 从自己解析的角度弄明白一个ELF文件的结构是怎样构成的. 这样可以更深刻的理解其布局.
 > 作者曾经解析过CLASS文件的基本格式, 这个可以看作C++版本的`class`文件解析.
 
+## 解析结果
 
+![解析结果图片](./ELF_FORMAT.jpg)
 ## 关于文件结构的一些参考:
 
 0. [ELF Header - ch4.eheader](https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html)

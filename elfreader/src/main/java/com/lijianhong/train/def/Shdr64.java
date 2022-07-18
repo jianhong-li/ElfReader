@@ -30,8 +30,6 @@ public class Shdr64 {
 
     public static final int size = 4 + 4 + 8 + 8 + 8 + 8 + 4 + 4 + 8 + 8;
 
-    public int _index;
-
     public int sh_name;        /* Section name, index in string tbl */
     public int sh_type;        /* Type of section */
     public long sh_flags;      /* Miscellaneous section attributes */
@@ -43,6 +41,7 @@ public class Shdr64 {
     public long sh_addralign;  /* Section alignment */
     public long sh_entsize;    /* Entry size if section holds table */
 
+    public int    _index;
     public String _name;
 
     public void init(byte[] fileBytes, int baseOffset) {
