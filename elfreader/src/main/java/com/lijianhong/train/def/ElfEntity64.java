@@ -25,18 +25,22 @@ public class ElfEntity64 {
         int sectionTableNumber = elfHeader.e_shnum;
 
         logger.info("段表基础偏移为:{} ,段个数为:{}", baseOffset, sectionTableNumber);
+        StringBuilder formatInfoBuffer = new StringBuilder();
         for (int i = 0; i < sectionTableNumber; i++) {
 
-            baseOffset += Shdr64.size;
-
-            //logger.info("start parse section table[{}], from baseoffset:{}",i,baseOffset);
+            logger.info("start parse section table[{}], from baseoffset:{}",String.format("%2d" ,i),baseOffset);
 
             Shdr64 shdr64 = new Shdr64();
             shdr64.init(fileBytes, baseOffset);
             shdr64._index = i;
             shdr64List.add(shdr64);
 
-            shdr64.printInfo();
+            //shdr64.printInfo();
+            formatInfoBuffer.append(shdr64.formatInfo());
+
+            baseOffset += Shdr64.size;
         }
+
+        System.out.println(formatInfoBuffer);
     }
 }

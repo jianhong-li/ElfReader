@@ -17,5 +17,6 @@ ELF 文件解析程序
 0. [ELF Header - ch4.eheader](https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html)
 1. [ELF Header - elfid](https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html#elfid)
 2. [elf-64-object-file-4-elf-64-object-file-format-version-14-file-header-eidenteimag0](https://documents.pub/document/elf-64-object-file-4-elf-64-object-file-format-version-14-file-header-eidenteimag0.html)
+2. [ELF-64 Object File Format - 上一个可以直接下载的版本](http://www.staroceans.org/e-book/elf-64-hp.pdf)
 3. [什么是ELF - 博客园(征途)](https://www.cnblogs.com/lwyeric/p/13582022.html)
 4. [ELF文件格式解析 - 博客园(征途)](https://www.cnblogs.com/lwyeric/p/13582112.html#elf_header)
