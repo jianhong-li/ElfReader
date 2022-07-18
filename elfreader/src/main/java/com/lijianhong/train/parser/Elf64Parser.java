@@ -32,6 +32,8 @@ public class Elf64Parser {
 
             elfEntity.initShdr(fileBytes);
 
+            elfEntity.initStrTab(fileBytes);
+
             logger.info("elfHeader:\n{}", elfEntity.elfHeader);
 
             Preconditions.checkState(elfEntity.elfHeader.e_ident[1] == 'E');

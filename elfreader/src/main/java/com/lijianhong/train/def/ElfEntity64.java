@@ -1,5 +1,7 @@
 package com.lijianhong.train.def;
 
+import com.google.common.collect.Lists;
+import com.lijianhong.train.def.enums.SH_TYPE;
 import com.lijianhong.train.reader.ReadUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,10 @@ public class ElfEntity64 {
 
 
     public List<Shdr64> shdr64List = new ArrayList<>();
+
+    public List<String> strStaList = Lists.newArrayList();
+
+
 
 
     public void initShdr(byte[] fileBytes) {
@@ -42,5 +48,32 @@ public class ElfEntity64 {
         }
 
         System.out.println(formatInfoBuffer);
+    }
+
+    public void initStrTab(byte[] fileBytes) {
+        long offset = 0;
+        Shdr64 shdr = null;
+        for (Shdr64 shdr64 : shdr64List) {
+            if (shdr64.sh_type == SH_TYPE.SHT_STRTAB.getCode()) {
+                offset = shdr64.sh_offset;
+                shdr = shdr64;
+                break;
+            }
+        }
+        if (offset == 0) {
+            logger.warn("当前ELF文件没有常字符串");
+            return;
+        }
+        long end = offset + shdr.sh_size;
+
+
+        long start = offset;
+        long strEnd = start;
+//        do {
+//
+//        }
+
+
+//        new String(fileBytes,)
     }
 }

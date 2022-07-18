@@ -63,14 +63,14 @@ public class Shdr64 {
             sb.append("[Nr]").append("\t\t");
             sb.append("Name\t\t\t\t\t\t");
             sb.append("TYPE\t\t\t\t\t\t\t\t");
-            sb.append("Flag\t\t\t\t");
-            sb.append("Addr\t\t\t\t");
-            sb.append("Offset\t\t\t\t\t");
-            sb.append("size\t\t\t");
+            sb.append("Flag\t\t\t\t\t\t\t\t\t\t\t\t\t");
+            sb.append("Addr").append(makeTab("Addr",12));
+            sb.append("Offset").append(makeTab("Offset",12));
+            sb.append("size").append(makeTab("size",8));
+            sb.append("Lk").append(makeTab("lk",8));
+            sb.append("Inf").append(makeTab("Inf",8));
+            sb.append("Al").append(makeTab("Al",4));;
             sb.append("ES\t\t\t");
-            sb.append("Lk\t\t");
-            sb.append("Inf\t\t");
-            sb.append("Al");
             sb.append("\n");
         }
         // 编号
@@ -93,7 +93,7 @@ public class Shdr64 {
         sb.append(Hex.toHex(sh_offset)).append("\t\t\t");
 
         // 段大小
-        sb.append(sh_size).append("\t\t\t");
+        sb.append(sh_size).append(makeTab(String.valueOf(sh_size),8));
 
         // sh_link
         sb.append(Hex.toHex(sh_link)).append("\t\t\t");
@@ -102,10 +102,10 @@ public class Shdr64 {
         sb.append(Hex.toHex(sh_info)).append("\t\t\t");
 
         // 地址对齐信息
-        sb.append(sh_addralign).append("\t\t\t");
+        sb.append(sh_addralign).append(makeTab(String.valueOf(sh_addralign),4));
 
         // section entry size 项的长度
-        sb.append(sh_entsize).append("\t\t\t");
+        sb.append(sh_entsize).append(makeTab(String.valueOf(sh_entsize),4));
 
         //logger.info("{}",sb);
         sb.append("\n");
