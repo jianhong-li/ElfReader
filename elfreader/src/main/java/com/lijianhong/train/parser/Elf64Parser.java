@@ -35,13 +35,23 @@ public class Elf64Parser {
 
             elfEntity.initStrTab(fileBytes);
 
+            elfEntity.printSegTabInfo();
+
+            elfEntity.printStrTab();
+            elfEntity.printShtStrTab();
+
+
+            // 解析符号表
+            elfEntity.initSymTab(fileBytes);
+
             //logger.info("elfHeader:\n{}", elfEntity.elfHeader);
 
             Preconditions.checkState(elfEntity.elfHeader.e_ident[1] == 'E');
             Preconditions.checkState(elfEntity.elfHeader.e_ident[2] == 'L');
             Preconditions.checkState(elfEntity.elfHeader.e_ident[3] == 'F');
 
-            elfEntity.printSegTabInfo();
+
+            elfEntity.printSymSeg();
             // 打印段表偏移.
             logger.info("段表位置偏移:{}", elfEntity.elfHeader.e_shoff);
 

@@ -4,6 +4,7 @@ import com.lijianhong.train.def.enums.SH_FLAG;
 import com.lijianhong.train.def.enums.SH_TYPE;
 import com.lijianhong.train.reader.ReadUtils;
 import com.lijianhong.train.util.Hex;
+import com.lijianhong.train.util.Tab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ public class Elf64_Shdr {
     //  Elf64_Xword sh_entsize;	/* Entry size if section holds table */
     //} Elf64_Shdr;
 
-    public static final int size = 4 + 4 + 8 + 8 + 8 + 8 + 4 + 4 + 8 + 8;
+    public static final int _size = 4 + 4 + 8 + 8 + 8 + 8 + 4 + 4 + 8 + 8;
 
     public int sh_name;        /* Section name, index in string tbl */
     public int sh_type;        /* Type of section */
@@ -42,7 +43,7 @@ public class Elf64_Shdr {
     public long sh_entsize;    /* Entry size if section holds table */
 
     public int    _index;
-    public String _name;
+    public String _name = "";
 
     public void init(byte[] fileBytes, int baseOffset) {
             this.sh_name    = ReadUtils.readWord(fileBytes,        baseOffset);
@@ -65,12 +66,12 @@ public class Elf64_Shdr {
             sb.append("Name\t\t\t\t\t\t");
             sb.append("TYPE\t\t\t\t\t\t\t\t");
             sb.append("Flag\t\t\t\t\t\t\t\t\t\t\t\t\t");
-            sb.append("Addr").append(makeTab("Addr",12));
-            sb.append("Offset").append(makeTab("Offset",12));
-            sb.append("size").append(makeTab("size",4));
-            sb.append("Lk").append(makeTab("lk",8));
-            sb.append("Inf").append(makeTab("Inf",8));
-            sb.append("Al").append(makeTab("Al",4));;
+            sb.append("Addr").append(Tab.makeTab("Addr",12));
+            sb.append("Offset").append(Tab.makeTab("Offset",12));
+            sb.append("size").append(Tab.makeTab("size",4));
+            sb.append("Lk").append(Tab.makeTab("lk",8));
+            sb.append("Inf").append(Tab.makeTab("Inf",8));
+            sb.append("Al").append(Tab.makeTab("Al",4));;
             sb.append("ES\t\t\t");
             sb.append("\n");
         }
@@ -79,13 +80,13 @@ public class Elf64_Shdr {
 
         // 名称
         String __name = _name.isEmpty() ? Hex.toHex(sh_name) : _name;
-        sb.append(__name).append(makeTab(String.valueOf(__name), 8));
+        sb.append(__name).append(Tab.makeTab(String.valueOf(__name), 8));
 
         // 类型
-        sb.append(SH_TYPE.codeOf(sh_type)).append(makeTab(String.valueOf(SH_TYPE.codeOf(sh_type)), 10));
+        sb.append(SH_TYPE.codeOf(sh_type)).append(Tab.makeTab(String.valueOf(SH_TYPE.codeOf(sh_type)), 10));
 
         // 标志:
-        sb.append(SH_FLAG.codesOf(sh_flags)).append(makeTab(String.valueOf(SH_FLAG.codesOf(sh_flags)), 15));
+        sb.append(SH_FLAG.codesOf(sh_flags)).append(Tab.makeTab(String.valueOf(SH_FLAG.codesOf(sh_flags)), 15));
 
         // 段虚拟地址
         sb.append(Hex.toHex(sh_addr)).append("\t\t\t");
@@ -95,7 +96,7 @@ public class Elf64_Shdr {
         sb.append(Hex.toHex(sh_offset)).append("\t\t\t");
 
         // 段大小
-        sb.append(sh_size).append(makeTab(String.valueOf(sh_size),4));
+        sb.append(sh_size).append(Tab.makeTab(String.valueOf(sh_size),4));
 
         // sh_link
         sb.append(Hex.toHex(sh_link)).append("\t\t\t");
@@ -104,40 +105,17 @@ public class Elf64_Shdr {
         sb.append(Hex.toHex(sh_info)).append("\t\t\t");
 
         // 地址对齐信息
-        sb.append(sh_addralign).append(makeTab(String.valueOf(sh_addralign),4));
+        sb.append(sh_addralign).append(Tab.makeTab(String.valueOf(sh_addralign),4));
 
         // section entry size 项的长度
-        sb.append(sh_entsize).append(makeTab(String.valueOf(sh_entsize),4));
+        sb.append(sh_entsize).append(Tab.makeTab(String.valueOf(sh_entsize), 4));
 
         //logger.info("{}",sb);
         sb.append("\n");
         return sb.toString();
     }
 
-    private String makeTab(String content,int contentTabs ) {
 
-        int tabSize = 2;
-        int length = content.length();
-        int tabCnt = 0;
-        if (length % tabSize != 0) {
-            tabCnt++;
-            length = (length + tabSize - 1) / tabSize;
-        }else {
-            length = length / tabSize;
-        }
-
-        if (length < contentTabs) {
-            tabCnt = tabCnt + (contentTabs - length);
-        }
-
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < tabCnt; i++) {
-
-            s.append("\t");
-        }
-        return s.toString();
-
-    }
 
     public void printInfo() {
 

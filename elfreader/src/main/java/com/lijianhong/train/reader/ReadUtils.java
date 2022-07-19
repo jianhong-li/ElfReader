@@ -18,6 +18,11 @@ public class ReadUtils {
 
     private static Logger logger = LoggerFactory.getLogger(ReadUtils.class);
 
+    public static short readUByte(byte[] fileBytes, int offset) {
+        byte item = fileBytes[offset];
+        return (short) (item & 0x00ff);
+    }
+
     public static void readBytes(byte[] fileBytes, int offset, int len, byte[] output) {
         if (len >= 0) {
             System.arraycopy(fileBytes, offset, output, 0, len);
