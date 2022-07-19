@@ -3,7 +3,6 @@ package com.lijianhong.train.def;
 import com.lijianhong.train.def.enums.ENDIAN_TYPE;
 import com.lijianhong.train.reader.ReadUtils;
 import com.lijianhong.train.util.Hex;
-import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * @author lijianhong Date: 2022/7/17 Time: 4:13 PM
  * @version $Id$
  */
-public class ElfHeader64 {
+public class Elf64_Ehdr {
 
-    private static Logger logger = LoggerFactory.getLogger(ElfHeader64.class);
+    private static Logger logger = LoggerFactory.getLogger(Elf64_Ehdr.class);
 
     // typedef struct elf64_hdr {
     //     unsigned char	e_ident[EI_NIDENT];	/* ELF "magic number" */

@@ -1,9 +1,7 @@
 package com.lijianhong.train.parser;
 
 import com.google.common.base.Preconditions;
-import com.lijianhong.train.def.ElfEntity64;
-import com.lijianhong.train.def.ElfHeader64;
-import com.lijianhong.train.reader.ReadUtils;
+import com.lijianhong.train.def.Elf64_Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,11 +15,11 @@ public class Elf64Parser {
 
     private boolean is64BitPlatform;
 
-    private ElfEntity64 elfEntity;
+    private Elf64_Entity elfEntity;
 
     public Elf64Parser(byte[] fileBytes) {
 
-        elfEntity = new ElfEntity64(fileBytes);
+        elfEntity = new Elf64_Entity(fileBytes);
 
 
         byte elfType = fileBytes[4];
@@ -52,7 +50,7 @@ public class Elf64Parser {
         }
     }
 
-    public ElfEntity64 parse() {
+    public Elf64_Entity parse() {
 
         return elfEntity;
     }

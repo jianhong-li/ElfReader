@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * @author lijianhong Date: 2022/7/17 Time: 10:32 PM
  * @version $Id$
  */
-public class Shdr64 {
+public class Elf64_Shdr {
 
-    private static Logger logger = LoggerFactory.getLogger(Shdr64.class);
+    private static Logger logger = LoggerFactory.getLogger(Elf64_Shdr.class);
 
     // typedef struct elf64_shdr {
     //  Elf64_Word sh_name;		/* Section name, index in string tbl */

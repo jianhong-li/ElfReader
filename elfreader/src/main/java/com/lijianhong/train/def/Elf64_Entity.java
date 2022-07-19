@@ -1,7 +1,6 @@
 package com.lijianhong.train.def;
 
 import com.google.common.collect.Lists;
-import com.lijianhong.train.def.enums.SH_TYPE;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -11,22 +10,22 @@ import org.slf4j.LoggerFactory;
  * @author lijianhong Date: 2022/7/17 Time: 4:24 PM
  * @version $Id$
  */
-public class ElfEntity64 {
+public class Elf64_Entity {
 
-    private static Logger logger = LoggerFactory.getLogger(ElfEntity64.class);
+    private static Logger logger = LoggerFactory.getLogger(Elf64_Entity.class);
 
     byte[] fileBytes = null;
 
-    public ElfHeader64 elfHeader = new ElfHeader64();
+    public Elf64_Ehdr elfHeader = new Elf64_Ehdr();
 
     // 段表
-    public List<Shdr64> shdr64List = new ArrayList<>();
+    public List<Elf64_Shdr> shdr64List = new ArrayList<>();
 
     // 常量段
     public List<String> sectionNameStrTAB = Lists.newArrayList();
 
 
-    public ElfEntity64(byte[] fileBytes) {
+    public Elf64_Entity(byte[] fileBytes) {
         this.fileBytes = fileBytes;
     }
 
@@ -40,17 +39,17 @@ public class ElfEntity64 {
 
             // logger.info("start parse section table[{}], from baseoffset:{}",String.format("%2d" ,i),baseOffset);
 
-            Shdr64 shdr64 = new Shdr64();
+            Elf64_Shdr shdr64 = new Elf64_Shdr();
             shdr64.init(fileBytes, baseOffset);
             shdr64._index = i;
             shdr64List.add(shdr64);
-            baseOffset += Shdr64.size;
+            baseOffset += Elf64_Shdr.size;
         }
     }
 
     public void printSegTabInfo() {
         StringBuilder formatInfoBuffer = new StringBuilder();
-        for (Shdr64 shdr64 : shdr64List) {
+        for (Elf64_Shdr shdr64 : shdr64List) {
             formatInfoBuffer.append(shdr64.formatInfo());
         }
         System.out.println(formatInfoBuffer);
@@ -60,11 +59,11 @@ public class ElfEntity64 {
 
         // 段名称
         short idx = elfHeader.e_shstrndx;
-        Shdr64 secNameSegHdr = shdr64List.get(idx);
+        Elf64_Shdr secNameSegHdr = shdr64List.get(idx);
         this.sectionNameStrTAB = parseStrTab(secNameSegHdr);
 
         // 解析完成后,初始化段名
-        for (Shdr64 shdr64 : shdr64List) {
+        for (Elf64_Shdr shdr64 : shdr64List) {
             int baseOffset = (int) (secNameSegHdr.sh_offset + shdr64.sh_name);
             int end = (int) (secNameSegHdr.sh_offset + secNameSegHdr.sh_size);
             shdr64._name = new String(
@@ -76,7 +75,7 @@ public class ElfEntity64 {
         // 其它字符串表
     }
 
-    private List<String> parseStrTab(Shdr64 secNameSegHdr) {
+    private List<String> parseStrTab(Elf64_Shdr secNameSegHdr) {
 
         List<String> tmp = Lists.newArrayList();
         long offset = secNameSegHdr.sh_offset;
