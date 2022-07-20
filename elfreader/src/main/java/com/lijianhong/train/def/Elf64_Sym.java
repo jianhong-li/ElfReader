@@ -67,26 +67,29 @@ public class Elf64_Sym {
      * @return 格式化好的待展示元素
      */
     public String formatInfo() {
-        String[] tabHeader = {"st_name","st_value" , "Size" , "Type" , "Bind"};
+        String[] tabHeader = {"Num","st_name","st_value" , "Size" , "Type" , "Bind" ,"Ndx"};
         StringBuilder sb = new StringBuilder();
         if (_index == 0) {
             sb.append("\n");
-            sb.append(tabHeader[0]).append(Tab.makeTab(tabHeader[0], 10));
-            sb.append(tabHeader[1]).append(Tab.makeTab(tabHeader[1], 12));
-            sb.append(tabHeader[2]).append(Tab.makeTab(tabHeader[2], 4));
-            sb.append(tabHeader[3]).append(Tab.makeTab(tabHeader[3], 8));
+            sb.append(tabHeader[0]).append(Tab.makeTab(tabHeader[0], 4));
+            sb.append(tabHeader[1]).append(Tab.makeTab(tabHeader[1], 10));
+            sb.append(tabHeader[2]).append(Tab.makeTab(tabHeader[2], 12));
+            sb.append(tabHeader[3]).append(Tab.makeTab(tabHeader[3], 4));
             sb.append(tabHeader[4]).append(Tab.makeTab(tabHeader[4], 8));
+            sb.append(tabHeader[5]).append(Tab.makeTab(tabHeader[5], 8));
+            sb.append(tabHeader[6]).append(Tab.makeTab(tabHeader[6], 4));
             sb.append("\n");
             sb.append(Tab.makeLine(40));
             sb.append("\n");
         }
 
-
+        sb.append(_index).append(Tab.makeTab(String.valueOf(_index), 4));
         sb.append(_st_name).append(Tab.makeTab(_st_name, 10));
         sb.append(Hex.toHex(st_value)).append(Tab.makeTab(Hex.toHex(st_value), 12));
         sb.append(String.format("%4d",st_size)).append(Tab.makeTab(String.format("%4d",st_size), 4));
         sb.append(STT_TYPE.codeOf(st_info).getName()).append(Tab.makeTab(STT_TYPE.codeOf(st_info).getName(), 8));
         sb.append(STB_BIND.codeOf(st_info).getName()).append(Tab.makeTab(STB_BIND.codeOf(st_info).getName(), 8));
+        sb.append(Hex.toHex(st_shndx)).append(Tab.makeTab(Hex.toHex(st_shndx), 4));
         sb.append("\n");
         return sb.toString();
     }
