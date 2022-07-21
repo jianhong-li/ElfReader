@@ -1,6 +1,9 @@
 package com.lijianhong.train.def.enums;
 
 /**
+ * <pre>
+ *     低四位代表符号类型
+ * </pre>
  * @author lijianhong Date: 2022/7/20 Time: 7:28 PM
  * @version $Id$
  */
@@ -42,8 +45,12 @@ public enum STT_TYPE {
 
 
     public static STT_TYPE codeOf(int code) {
+        // 低四位为 符号类型. 因此mask为: 0x0f
+        code = code & 0x0000000f;
+
         for (STT_TYPE o : STT_TYPE.values()) {
-            if ((o.getCode() & 0x0f) == code) {
+            if (o.getCode() == code) {
+
                 return o;
             }
         }
