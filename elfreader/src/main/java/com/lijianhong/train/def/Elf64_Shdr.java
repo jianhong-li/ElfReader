@@ -9,6 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <pre>
+ *     Section Header Table
+ *     .       .  . .
+ *     --------------
+ *           ||
+ *          \ /
+ *           +
+ *           Shdr
+ * </pre>
  * @author lijianhong Date: 2022/7/17 Time: 10:32 PM
  * @version $Id$
  */

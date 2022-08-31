@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <pre>
+ *     ELF64 文件对象实体
+ * </pre>
  * @author lijianhong Date: 2022/7/17 Time: 4:24 PM
  * @version $Id$
  */
@@ -114,9 +117,9 @@ public class Elf64_Entity {
 
     public void initStrTab(byte[] fileBytes) {
 
-        // 段名称
-        short idx = elfHeader.e_shstrndx;
-        Elf64_Shdr secNameSegHdr = shdr64List.get(idx);
+        // 段名称字符串表所在的段编号
+        short shstrndx = elfHeader.e_shstrndx;
+        Elf64_Shdr secNameSegHdr = shdr64List.get(shstrndx);
         this.sectionNameStrTAB = parseStrTab(secNameSegHdr);
 
         // 解析完成后,初始化段名

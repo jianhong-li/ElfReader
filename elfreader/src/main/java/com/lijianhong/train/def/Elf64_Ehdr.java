@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <pre>
+ *     ELF64  header (ELF64 文件头)
+ * </pre>
  * @author lijianhong Date: 2022/7/17 Time: 4:13 PM
  * @version $Id$
  */
